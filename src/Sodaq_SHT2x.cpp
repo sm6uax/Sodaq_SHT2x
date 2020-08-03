@@ -63,7 +63,7 @@ typedef enum {
  **********************************************************/
 float SHT2xClass::GetHumidity(void)
 {
-    float value = readSensor(eRHumidityHoldCmd);
+    float value = readSensor(eRHumidityNoHoldCmd);
     if (value == 0) {
         return 0;                       // Some unrealistic value
     }
@@ -78,7 +78,7 @@ float SHT2xClass::GetHumidity(void)
  **********************************************************/
 float SHT2xClass::GetTemperature(void)
 {
-    float value = readSensor(eTempHoldCmd);
+    float value = readSensor(eTempNoHoldCmd);
     if (value == 0) {
         return -273;                    // Roughly Zero Kelvin indicates an error
     }
