@@ -33,18 +33,25 @@
 #define SHT2X_H
 
 #include <stdint.h>
-
+#include <Wire.h>
+#define SHT2xAddress 0x40
 class SHT2xClass
 {
   private:
     uint16_t readSensor(uint8_t command);
-
+    TwoWire& mWire;
+	  uint8_t mAddress;
   public:
+    SHT2xClass(TwoWire& wire = Wire,uint8_t i2cAddress = SHT2xAddress):
+    mAddress(i2cAddress),
+    mWire(wire)
+	  {
+	  }
     float GetHumidity(void);
     float GetTemperature(void);
     float GetDewPoint(void);
 };
 
-extern SHT2xClass SHT2x;
+
 
 #endif

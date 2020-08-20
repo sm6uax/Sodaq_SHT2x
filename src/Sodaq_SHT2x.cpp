@@ -112,28 +112,27 @@ uint16_t SHT2xClass::readSensor(uint8_t command)
 {
     uint16_t result;
 
-    Wire.beginTransmission(eSHT2xAddress);
-    Wire.write(command);
-    Wire.endTransmission();
+    mWire.beginTransmission(eSHT2xAddress);
+    mWire.write(command);
+    mWire.endTransmission();
     delay(100);
 
-    Wire.requestFrom(eSHT2xAddress, 3);
+    mWire.requestFrom(eSHT2xAddress, 3);
     uint32_t timeout = millis() + 300;       // Don't hang here for more than 300ms
-    while (Wire.available() < 3) {
+    while (mWire.available() < 3) {
         if ((millis() - timeout) > 0) {
             return 0;
         }
     }
 
     //Store the result
-    result = Wire.read() << 8;
-    result += Wire.read();
+    result = mWire.read() << 8;
+    result += mWire.read();
     result &= ~0x0003;   // clear two low bits (status bits)
 
     //Clear the final byte from the buffer
-    Wire.read();
+    mWire.read();
 
     return result;
 }
 
-SHT2xClass SHT2x;
